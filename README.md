@@ -32,10 +32,15 @@ This is a backend API project I built to learn FastAPI and PostgreSQL. It is a s
 
 3. Copy the `.env.example` file and rename it to `.env`. Update your PostgreSQL database URL in this file.
 
-4. Run the API:
+4. Apply database migrations:
+   ```bash
+   alembic upgrade head
+   ```
+
+5. Run the API:
    ```bash
    fastapi dev app/main.py
    ```
    *(Alternatively, you can run `uvicorn app.main:app --reload`)*
 
-5. Go to `http://127.0.0.1:8000/docs` in your browser to see the interactive API documentation and test the endpoints.
+6. Go to `http://127.0.0.1:8000/docs` in your browser to see the interactive API documentation and test the endpoints.
