@@ -30,17 +30,23 @@ This is a backend API project I built to learn FastAPI and PostgreSQL. It is a s
    pip install -r requirements.txt
    ```
 
-3. Copy the `.env.example` file and rename it to `.env`. Update your PostgreSQL database URL in this file.
+3. Copy the `.env.example` file and rename it to `.env`. The default database URL matches the Docker setup.
 
-4. Apply database migrations:
+4. Start the PostgreSQL database using Docker:
    ```bash
+   docker-compose up -d
+   ```
+
+5. Generate the initial migration and apply it to the database:
+   ```bash
+   alembic revision --autogenerate -m "initial migration"
    alembic upgrade head
    ```
 
-5. Run the API:
+6. Run the API:
    ```bash
    fastapi dev app/main.py
    ```
    *(Alternatively, you can run `uvicorn app.main:app --reload`)*
 
-6. Go to `http://127.0.0.1:8000/docs` in your browser to see the interactive API documentation and test the endpoints.
+7. Go to `http://127.0.0.1:8000/docs` in your browser to see the interactive API documentation and test the endpoints.
