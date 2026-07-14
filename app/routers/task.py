@@ -25,11 +25,21 @@ def create_task(
 
 @router.get("/", response_model=List[TaskResponse])
 def get_tasks(
+    skip: int = 0,
+    limit: int = 10,
+    status: str | None = None,
     db: Session = Depends(get_db), 
     current_user: User = Depends(get_current_user)
 ):
-    # VERY IMPORTANT: We filter tasks by current_user.id
-    tasks = db.query(Task).filter(Task.owner_id == current_user.id).all()
+    # Base query for the current user's tasks
+    query = db.query(Task).filter(Task.owner_id == current_user.id)
+    
+    # Filtering: If status is provided, add it to the filter
+    if status:
+        query = query.filter(Task.status == status)
+        
+    # Pagination: skip N items, take limit M items
+    tasks = query.offset(skip).limit(limit).all()
     return tasks
 
 @router.get("/{task_id}", response_model=TaskResponse)
